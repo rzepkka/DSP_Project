@@ -2,7 +2,7 @@ captum==0.4.1
 celluloid==0.2.0
 dicom2nifti==2.3.0
 docx2txt==0.8
-ipython==8.0.0
+ipython==7.31.1
 matplotlib==3.5.0
 nibabel==3.2.1
 numpy==1.21.2
