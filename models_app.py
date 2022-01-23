@@ -98,6 +98,7 @@ def run_models_app():
 					# st.write(notes)
 					text_downloader(notes)
 				with col2:
+					st.subheader(f"Prediction: {model_prediction}")	
 					method = classifier.explain_image(im_pil_rgb, model_prediction, model,method=chosen_method)
 					st.pyplot(method, height=height+200, width=width+200)
 		
