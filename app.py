@@ -19,10 +19,18 @@ from patient_app import run_patient_app
 from medical_app import run_medical_app
 from models_app import run_models_app
 
+# Load Images
+@st.cache
+def load_image(image_file):
+	img = Image.open(image_file)
+	return img
 
 def main():
 	st.set_page_config(layout="wide")
-	st.title("DSP - Alzheimer's Detection Group")
+	# st.title("DSP - Alzheimer's Detection Group")
+
+	# with st.sidebar:
+	# 	st.image(load_image('images/uva_logo.png'), use_column_width  = True, )
 
 	menu = ["Home", "Upload Image for Analysis","Patients Data","Medical Image Viewer","About"]
 	st.sidebar.header('App Navigator')
