@@ -42,10 +42,20 @@ def text_downloader(raw_text):
 
 
 def run_models_app():
-	submenu_model = st.sidebar.selectbox("Choose Model:",["<select>","VGG 16","Something else"])
-	# submenu_explainable = st.sidebar.selectbox("Choose Explainable Method:",["Grad-Cam","LIME"])
-	methods = ["Gradient Magnitudes", "Integrated Gradients", "Deep Lift", "Grad-Cam",'Occlusion']
-	chosen_method = st.sidebar.radio("Choose Explainable Method:",("-","Gradient Magnitudes", "Integrated Gradients", "Deep Lift", "Grad-Cam","Occlusion"))
+
+	# submenu_model = st.sidebar.selectbox("Choose Model:",["<select>","VGG 16"])
+
+	methods = ["Gradient Magnitudes", "Integrated Gradients", "Deep Lift", "Grad-Cam","Occlusion"]
+	
+	explanations = {"Gradient Magnitudes":"The gradient magnitude is a metric for determining how significant a change in image intensity is. It is a real-valued quantity that expresses the 'strength' of an intensity variation.", 
+					"Integrated Gradients":"Integrated Gradient (IG) is a deep neural network interpretability or explainability technique that visualizes the importance of the model's input features that contribute to its prediction. This method computes the gradient of the model's prediction output to its input features and does not require any changes to the deep neural network's original architecture.",
+					"Deep Lift":"DeepLIFT (Deep Learning Important FeaTures) is a method for decomposing the output prediction of a neural network on a specific input by backpropagating the contributions of all neurons in the network to every feature of the input. DeepLIFT compares the activation of each neuron to its ‘reference activation’ and assigns contribution scores according to the difference.", 
+					"Grad-Cam":"Gradient-weighted Class Activation Mapping (Grad-CAM) uses the gradients of any target concept flowing into the final convolutional layer to produce a coarse localization map highlighting the important regions in the image for predicting the concept.",
+					"Occlusion":"Occlusion techniques in computer vision block a portion of an image during training time, challenging the network to learn not to rely canonical features. Looking at the Class Activation Map (CAM) it might seen that the network relies heavily on some particular parts of the image to make predictions."}
+
+	st.sidebar.subheader("Machine Learning model used: VGG 16")
+
+	chosen_method = st.sidebar.selectbox("Choose Explainable Method:",("<select>","Gradient Magnitudes", "Integrated Gradients", "Deep Lift", "Grad-Cam","Occlusion"))
 	button_run_model = st.sidebar.button('Run Model',key='button-run-model')
 
 	st.subheader("Image Uploader")
@@ -53,16 +63,21 @@ def run_models_app():
 
 	col1, col2 = st.columns(2)
 
+	submenu_model = "VGG 16"
+
 	with col1:
 		st.subheader("Uploaded File")
 
-	if submenu_model in ["VGG 16","Something else"] and chosen_method in methods:
+	# if submenu_model in ["VGG 16","Something else"] and chosen_method in methods:
+	if chosen_method in methods:
 		if image_file is not None:
 			im_pil = load_image(image_file)
 			im_pil_rgb = im_pil.convert('RGB')
 
 			height, width = im_pil.size
 			im_pil = im_pil.resize((height+200,width+200))
+
+			st.sidebar.info(explanations[chosen_method])
 
 
 			if submenu_model == "VGG 16":
@@ -74,7 +89,6 @@ def run_models_app():
 				model = classifier.load_checkpoint()
 				model_prediction = classifier.make_prediction(model, im_pil_rgb)
 
-			# st.write(model)
 			
 			with col1:
 				
@@ -103,6 +117,9 @@ def run_models_app():
 					st.pyplot(method, height=height+200, width=width+200)
 		
 		else:
+			st.sidebar.info(explanations[chosen_method])
+
 			st.sidebar.warning('Please upload a file')
+
 	else:
 		st.sidebar.warning('Please select model and explainable method')
