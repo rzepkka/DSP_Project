@@ -58,15 +58,15 @@ def run_models_app():
 	chosen_method = st.sidebar.selectbox("Choose Explainable Method:",("<select>","Gradient Magnitudes", "Integrated Gradients", "Deep Lift", "Grad-Cam","Occlusion"))
 	button_run_model = st.sidebar.button('Run Model',key='button-run-model')
 
-	st.subheader("Image Uploader")
+	st.subheader("Explainability for Machine Learning Predictions")
 	image_file = st.file_uploader("Upload an Image",type=["png","jpg","jpeg"])
 
 	col1, col2 = st.columns(2)
 
 	submenu_model = "VGG 16"
 
-	with col1:
-		st.subheader("Uploaded File")
+	# with col1:
+	# 	st.subheader("Uploaded File")
 
 	# if submenu_model in ["VGG 16","Something else"] and chosen_method in methods:
 	if chosen_method in methods:
@@ -93,6 +93,7 @@ def run_models_app():
 			with col1:
 				
 					# st.image(load_image(im_pil)) #width=250,height=250)
+					st.subheader("Uploaded File")
 					st.image(im_pil)
 					notes = st.text_area('Notes', height=200)
 					button_save_notes = st.button('Save', key='button-save-notes')
@@ -106,6 +107,8 @@ def run_models_app():
 					method = classifier.explain_image(im_pil_rgb, model_prediction, model,method=chosen_method)
 					# fig.imshow(method)
 					st.pyplot(method, height=100, width=100)
+			else:
+				st.sidebar.warning("Run the model to see the prediciton.")
 
 			if button_save_notes:
 				with col1:
