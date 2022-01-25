@@ -49,7 +49,7 @@ def run_models_app():
 
 	preds = {"NonDemented": "Non Demented", "VeryMildDemented": "Very Mild Demented", "MildDemented": "Mild Demented", "ModerateDemented": "Moderate Demented"}
 	
-	explanations = {"Saliency":"The gradient magnitude is a metric for determining how significant a change in image intensity is. It is a real-valued quantity that expresses the 'strength' of an intensity variation.", 
+	explanations = {"Saliency":"Saliency is a metric for determining how significant a change in image intensity is. It is a real-valued quantity that expresses the 'strength' of an intensity variation.", 
 					"Integrated Gradients":"Integrated Gradient (IG) is a deep neural network interpretability or explainability technique that visualizes the importance of the model's input features that contribute to its prediction. This method computes the gradient of the model's prediction output to its input features and does not require any changes to the deep neural network's original architecture.",
 					"Deep Lift":"DeepLIFT (Deep Learning Important FeaTures) is a method for decomposing the output prediction of a neural network on a specific input by backpropagating the contributions of all neurons in the network to every feature of the input. DeepLIFT compares the activation of each neuron to its ‘reference activation’ and assigns contribution scores according to the difference.", 
 					"Grad-Cam":"Gradient-weighted Class Activation Mapping (Grad-CAM) uses the gradients of any target concept flowing into the final convolutional layer to produce a coarse localization map highlighting the important regions in the image for predicting the concept.",
@@ -77,7 +77,7 @@ def run_models_app():
 			im_pil_rgb = im_pil.convert('RGB')
 
 			height, width = im_pil.size
-			im_pil = im_pil.resize((height+round(1.5*height),width+round(1.5*width)))
+			im_pil = im_pil.resize((height+round(1.2*height),width+round(1.2*width)))
 
 			st.sidebar.info(explanations[chosen_method])
 
