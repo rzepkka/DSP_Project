@@ -127,13 +127,14 @@ def explain_image(input, prediction, model, method=None):
     input_sample = (input_tensor.squeeze() / 2 + 0.5).unsqueeze(0)  # Denormalized Tensor
     input_sample.requires_grad = True
     original_image = np.transpose((input_sample[0].cpu().detach().numpy() / 2) + 0.5, (1, 2, 0)) # Array with denorm Img
-    if method == "Gradient Magnitudes":
+    if method == "Saliency":
         saliency = Saliency(model)
         grads = saliency.attribute(input_sample, target=target_map[prediction])
         grads = np.transpose(grads.squeeze().cpu().detach().numpy(), (1, 2, 0))
 
         # Visualize
         x = viz.visualize_image_attr(grads, original_image, method="blended_heat_map", sign="absolute_value",
+                                    cmap="Greens",
                                      show_colorbar=True, title="Overlayed Gradient Magnitudes")
     elif method == "Integrated Gradients":
         ig = IntegratedGradients(model)
@@ -144,7 +145,7 @@ def explain_image(input, prediction, model, method=None):
 
         # Visualize
         x = viz.visualize_image_attr(attr_ig, original_image, method="blended_heat_map", sign="absolute_value",
-                                     cmap="Reds",
+                                     cmap="Greens",
                                      show_colorbar=True, title="Overlayed Integrated Gradients")
     elif method == "Deep Lift":
         dl = DeepLift(model)
@@ -152,7 +153,8 @@ def explain_image(input, prediction, model, method=None):
         attr_dl = np.transpose(attr_dl.squeeze(0).cpu().detach().numpy(), (1, 2, 0))
 
         # Visualize
-        x = viz.visualize_image_attr(attr_dl, original_image, method="blended_heat_map", sign="all", show_colorbar=True,
+        x = viz.visualize_image_attr(attr_dl, original_image, method="blended_heat_map", sign="absolute_value", show_colorbar=True,
+                                    cmap="Greens",
                                      title="Overlayed DeepLift")
     elif method == "Grad-Cam":
         # GuidedGradCAM.
@@ -161,7 +163,8 @@ def explain_image(input, prediction, model, method=None):
         attribution = np.transpose(attribution.squeeze(0).cpu().detach().numpy(), (1, 2, 0))
 
         # Visualize
-        x = viz.visualize_image_attr(attribution, original_image, method="blended_heat_map", sign="all",
+        x = viz.visualize_image_attr(attribution, original_image, method="blended_heat_map", sign="absolute_value",
+                                    cmap="Greens",
                                      show_colorbar=True,
                                      title="GradCam")
 
@@ -173,7 +176,7 @@ def explain_image(input, prediction, model, method=None):
         attribution = np.transpose(attribution.squeeze(0).cpu().detach().numpy(), (1, 2, 0))
 
         # Visualize
-        x = viz.visualize_image_attr(attribution, original_image, method="blended_heat_map", sign="all",show_colorbar=True, title="Occlusion")
+        x = viz.visualize_image_attr(attribution, original_image, method="blended_heat_map", cmap="Greens",sign="absolute_value",show_colorbar=True, title="Occlusion")
 
     return x[0]
 
