@@ -97,7 +97,7 @@ def run_models_app():
 					# st.image(load_image(im_pil)) #width=250,height=250)
 					st.subheader("Uploaded File")
 					st.image(im_pil)
-					notes = st.text_area('Notes', height=180)
+					notes = st.text_area('Notes', height=190)
 					button_save_notes = st.button('Save', key='button-save-notes')
 
 			if button_run_model:
