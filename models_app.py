@@ -45,9 +45,11 @@ def run_models_app():
 
 	# submenu_model = st.sidebar.selectbox("Choose Model:",["<select>","VGG 16"])
 
-	methods = ["Gradient Magnitudes", "Integrated Gradients", "Deep Lift", "Grad-Cam","Occlusion"]
+	methods = ["Saliency", "Integrated Gradients", "Deep Lift", "Grad-Cam","Occlusion"]
+
+	preds = {"NonDemented": "Non Demented", "VeryMildDemented": "Very Mild Demented", "MildDemented": "Mild Demented", "ModerateDemented": "Moderate Demented"}
 	
-	explanations = {"Gradient Magnitudes":"The gradient magnitude is a metric for determining how significant a change in image intensity is. It is a real-valued quantity that expresses the 'strength' of an intensity variation.", 
+	explanations = {"Saliency":"The gradient magnitude is a metric for determining how significant a change in image intensity is. It is a real-valued quantity that expresses the 'strength' of an intensity variation.", 
 					"Integrated Gradients":"Integrated Gradient (IG) is a deep neural network interpretability or explainability technique that visualizes the importance of the model's input features that contribute to its prediction. This method computes the gradient of the model's prediction output to its input features and does not require any changes to the deep neural network's original architecture.",
 					"Deep Lift":"DeepLIFT (Deep Learning Important FeaTures) is a method for decomposing the output prediction of a neural network on a specific input by backpropagating the contributions of all neurons in the network to every feature of the input. DeepLIFT compares the activation of each neuron to its ‘reference activation’ and assigns contribution scores according to the difference.", 
 					"Grad-Cam":"Gradient-weighted Class Activation Mapping (Grad-CAM) uses the gradients of any target concept flowing into the final convolutional layer to produce a coarse localization map highlighting the important regions in the image for predicting the concept.",
@@ -55,7 +57,7 @@ def run_models_app():
 
 	st.sidebar.subheader("Machine Learning model used: VGG 16")
 
-	chosen_method = st.sidebar.selectbox("Choose Explainable Method:",("<select>","Gradient Magnitudes", "Integrated Gradients", "Deep Lift", "Grad-Cam","Occlusion"))
+	chosen_method = st.sidebar.selectbox("Choose Explainable Method:",("<select>","Saliency", "Integrated Gradients", "Deep Lift", "Grad-Cam","Occlusion"))
 	button_run_model = st.sidebar.button('Run Model',key='button-run-model')
 
 	st.subheader("Explainability for Machine Learning Predictions")
@@ -75,7 +77,7 @@ def run_models_app():
 			im_pil_rgb = im_pil.convert('RGB')
 
 			height, width = im_pil.size
-			im_pil = im_pil.resize((height+200,width+200))
+			im_pil = im_pil.resize((height+round(1.5*height),width+round(1.5*width)))
 
 			st.sidebar.info(explanations[chosen_method])
 
@@ -102,11 +104,13 @@ def run_models_app():
 				st.sidebar.success("Model is running")
 
 				with col2:
-					st.subheader(f"Prediction: {model_prediction}")	
+					st.subheader(f"Prediction: {preds[model_prediction]}")	
 					model = classifier.load_checkpoint()			
 					method = classifier.explain_image(im_pil_rgb, model_prediction, model,method=chosen_method)
 					# fig.imshow(method)
 					st.pyplot(method, height=100, width=100)
+					st.success("The more intense the color, the more important was the feature for the prediciton.")
+
 			else:
 				st.sidebar.warning("Run the model to see the prediciton.")
 
@@ -118,6 +122,7 @@ def run_models_app():
 					st.subheader(f"Prediction: {model_prediction}")	
 					method = classifier.explain_image(im_pil_rgb, model_prediction, model,method=chosen_method)
 					st.pyplot(method, height=height+200, width=width+200)
+					st.success("The more intense the color, the more important was the feature for the prediciton.")
 		
 		else:
 			st.sidebar.info(explanations[chosen_method])
