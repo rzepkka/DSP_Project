@@ -130,4 +130,4 @@ def run_models_app():
 			st.sidebar.warning('Please upload a file')
 
 	else:
-		st.sidebar.warning('Please select model and explainable method')
+		st.sidebar.warning('Please select an explainable method to use')
