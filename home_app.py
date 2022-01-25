@@ -21,10 +21,10 @@ def load_image(image_file):
 	return img
 
 def run_home_app():
-	st.image(load_image('images/uva_logo.jpeg'), use_column_width  = True, )
-	st.image(load_image('images/home_2.png'), use_column_width  = True, )
+	# st.image(load_image('images/uva_logo.jpeg'), use_column_width  = True, )
+	st.image(load_image('images/logo.jpeg'), use_column_width  = True, )
 
-	st.title("DSP - Alzheimer's Detection Group")
+	# st.title("DSP - Alzheimer's Detection Group")
 
 	st.subheader("Welcome to Alzheimer's Detection Application!")
 	st.write("Explainable AI provides transparency in model decisions and helps adapting ML models in contextual usage as professionals are provided with transparency by retracing the decision made. This enables to critically scrutinize the decision and builds trust.")
