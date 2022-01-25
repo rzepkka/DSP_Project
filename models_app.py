@@ -77,7 +77,7 @@ def run_models_app():
 			im_pil_rgb = im_pil.convert('RGB')
 
 			height, width = im_pil.size
-			im_pil = im_pil.resize((height+round(1.2*height),width+round(1.2*width)))
+			im_pil = im_pil.resize((2*height,2*width))
 
 			st.sidebar.info(explanations[chosen_method])
 
@@ -97,7 +97,7 @@ def run_models_app():
 					# st.image(load_image(im_pil)) #width=250,height=250)
 					st.subheader("Uploaded File")
 					st.image(im_pil)
-					notes = st.text_area('Notes', height=200)
+					notes = st.text_area('Notes', height=180)
 					button_save_notes = st.button('Save', key='button-save-notes')
 
 			if button_run_model:
