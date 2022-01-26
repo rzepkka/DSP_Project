@@ -31,6 +31,9 @@ def run_patient_app():
 	submenu = st.sidebar.selectbox("Choose a method to upload data:",["Upload Patient's File","Introduce Data Manually"])
 
 	if submenu == "Upload Patient's File":
+
+		st.error("Ideally our application would be directly connected to a medical database to automatically link the diagnosis to an individual patient and his/her personal details. As this extension was not feasible within this course, this page was added. Here, the diagnosis can be manually linked to the patient's information. However, as this feature is not directly related to the main purpose of the project, viewed page will not be a part of the user testing.")
+
 		st.subheader("Upload Patient's Data")
 		data_file = st.file_uploader("Upload CSV",type=["csv"])
 		if data_file is not None:
@@ -38,6 +41,9 @@ def run_patient_app():
 			st.dataframe(df)
 
 	else:
+
+		st.error("Ideally our application would be directly connected to a medical database to automatically link the diagnosis to an individual patient and his/her personal details. As this extension was not feasible within this course, this page was added. Here, the diagnosis can be manually linked to the patient's information. However, as this feature is not directly related to the main purpose of the project, viewed page will not be a part of the user testing.")
+
 		st.subheader("Complete the following form with Patient's Medical data")
 		
 		with st.form(key='form-patient-data', clear_on_submit=True):
