@@ -42,7 +42,7 @@ def run_patient_app():
 
 	else:
 
-		st.warning("Ideally our application would be directly connected to a medical database to automatically link the diagnosis to an individual patient and his/her personal details. As this extension was not feasible within this course, this page was added. Here, the diagnosis can be manually linked to the patient's information.") # However, as this feature is not directly related to the main purpose of the project, viewed page will not be a part of the user testing.")
+		st.error("Ideally our application would be directly connected to a medical database to automatically link the diagnosis to an individual patient and his/her personal details. As this extension was not feasible within this course, this page was added. Here, the diagnosis can be manually linked to the patient's information.") # However, as this feature is not directly related to the main purpose of the project, viewed page will not be a part of the user testing.")
 
 		st.subheader("Complete the following form with Patient's Medical data")
 		st.info("As operators of this site, we take the protection of your personal information very seriously. Uploaded information will neither be stored nor disclosed to third parties.")
