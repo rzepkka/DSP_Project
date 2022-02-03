@@ -39,7 +39,7 @@ def text_downloader(raw_text):
 
 def run_medical_app():
 
-	st.error("The Medical Image Viewer is meant to visualise DICOM and NIfTI files. Due to privacy reasons, we cannot share the files obtained to test the application.") # This page is excluded from the user test, as we cannot guarantee all participants access to such files. ")
+	st.warning("The Medical Image Viewer is meant to visualise DICOM and NIfTI files. Due to privacy reasons, we cannot share the files obtained to test the application.") # This page is excluded from the user test, as we cannot guarantee all participants access to such files. ")
 	submenu = st.sidebar.selectbox("Choose file type:",["select","DICOM","NIfTI"])
 
 	if submenu == "DICOM":
